@@ -1,0 +1,103 @@
+---
+import { projects, recommendations, type Project } from '../data/projects'
+
+const githubIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .7a11.5 11.5 0 0 0-3.64 22.4c.58.1.79-.25.79-.56v-2.02c-3.23.7-3.91-1.38-3.91-1.38-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.58-.29-5.3-1.29-5.3-5.72 0-1.26.45-2.3 1.19-3.11-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.16 1.19A10.98 10.98 0 0 1 12 6.25c.98 0 1.96.13 2.88.39 2.19-1.5 3.15-1.19 3.15-1.19.64 1.59.24 2.77.12 3.06.74.81 1.19 1.85 1.19 3.11 0 4.45-2.72 5.42-5.31 5.71.42.36.79 1.07.79 2.16v3.05c0 .31.22.67.8.56A11.5 11.5 0 0 0 12 .7Z"/></svg>`
+const siteIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0c2.1-2.46 3.18-5.46 3.18-9S14.1 5.46 12 3c-2.1 2.46-3.18 5.46-3.18 9S9.9 18.54 12 21ZM3.55 9h16.9M3.55 15h16.9"/></svg>`
+
+function card(project: Project) {
+  return project
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Selected projects and recommendations." />
+    <title>Faro</title>
+    <style>
+      :root {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #171717;
+        background: #fafafa;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; }
+      main { width: min(980px, calc(100% - 40px)); margin: 0 auto; padding: 64px 0 88px; }
+      header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 52px; }
+      h1 { margin: 0; font-size: 21px; letter-spacing: -0.03em; font-weight: 650; }
+      header p { margin: 0; color: #8a8a8a; font-size: 13px; }
+      section + section { margin-top: 44px; }
+      h2 { margin: 0 0 12px; font-size: 12px; line-height: 1; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8a8a; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 260px)); gap: 10px; justify-content: start; }
+      .card { min-height: 106px; padding: 13px 14px; border: 1px solid #e7e7e7; border-radius: 14px; background: #fff; display: flex; flex-direction: column; transition: border-color 120ms ease, transform 120ms ease; }
+      .card:hover { border-color: #cccccc; transform: translateY(-1px); }
+      .top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+      h3 { margin: 1px 0 0; font-size: 14px; letter-spacing: -0.015em; font-weight: 640; }
+      nav { display: flex; gap: 4px; flex: 0 0 auto; }
+      nav a { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 8px; color: #777; text-decoration: none; }
+      nav a:hover { background: #f3f3f3; color: #171717; }
+      nav :global(svg) { width: 14px; height: 14px; display: block; }
+      .description { margin: 10px 0 0; color: #6f6f6f; font-size: 12px; line-height: 1.45; }
+      @media (max-width: 650px) {
+        main { width: min(100% - 28px, 980px); padding: 36px 0 60px; }
+        header { margin-bottom: 40px; }
+        header p { display: none; }
+        .grid { grid-template-columns: minmax(0, 1fr); }
+        .card { min-height: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Faro</h1>
+        <p>selected projects</p>
+      </header>
+
+      <section>
+        <h2>Projects</h2>
+        <div class="grid">
+          {projects.map((project) => {
+            const item = card(project)
+            return (
+              <article class="card">
+                <div class="top">
+                  <h3>{item.name}</h3>
+                  <nav aria-label={`${item.name} links`}>
+                    <a href={item.repo} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub" set:html={githubIcon} />
+                    {item.links?.map((link) => (
+                      <a href={link.url} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label} set:html={siteIcon} />
+                    ))}
+                  </nav>
+                </div>
+                <p class="description">{item.description}</p>
+              </article>
+            )
+          })}
+        </div>
+      </section>
+
+      <section>
+        <h2>Recommendations</h2>
+        <div class="grid">
+          {recommendations.map((project) => (
+            <article class="card">
+              <div class="top">
+                <h3>{project.name}</h3>
+                <nav aria-label={`${project.name} links`}>
+                  <a href={project.repo} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub" set:html={githubIcon} />
+                  {project.links?.map((link) => (
+                    <a href={link.url} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label} set:html={siteIcon} />
+                  ))}
+                </nav>
+              </div>
+              <p class="description">{project.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

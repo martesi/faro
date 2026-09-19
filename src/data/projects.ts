@@ -1,45 +1,51 @@
 export interface Link {
   label: string
   url: string
+  icon?: string
 }
 
 export interface Project {
   name: string
   description: string
-  repo: string
-  links?: Link[]
+  links: Link[]
 }
 
 export const projects: Project[] = [
   {
     name: 'Arca',
-    repo: 'https://github.com/martesi/arca',
-    description: 'Reusable agent skills with repository-aware recommendations for what to install.',
+    description: 'My workflows.',
+    links: [{ label: 'GitHub', url: 'https://github.com/martesi/arca', icon: 'github' }],
   },
   {
     name: 'Skillpack',
-    repo: 'https://github.com/martesi/skillpack',
-    description: 'A static PWA for browsing portable agent skill registries.',
+    description: 'Bundle skills to be used in ChatGPT web.',
+    links: [{ label: 'GitHub', url: 'https://github.com/martesi/skillpack', icon: 'github' }],
   },
   {
     name: 'Cita',
-    repo: 'https://github.com/martesi/cita',
-    description: 'Self-contained references for LLM answers, with the referenced text stored directly in the URL.',
+    description: 'Content renderer. Progressive disclosure utilzing how links are rendered.',
     links: [
       { label: 'ChatGPT Sites', url: 'https://cita.martes.dev' },
       { label: 'GitHub Pages', url: 'https://martesi.github.io/cita/' },
+      { label: 'GitHub', url: 'https://github.com/martesi/cita', icon: 'github' },
     ],
   },
   {
     name: 'Glint',
-    repo: 'https://github.com/martesi/glint',
-    description: 'Custom CSS for the ChatGPT desktop renderer applied through local CDP.',
+    description: 'Custom CSS for the ChatGPT desktop.',
+    links: [{ label: 'GitHub', url: 'https://github.com/martesi/glint', icon: 'github' }],
   },
   {
     name: 'Orphic',
-    repo: 'https://github.com/martesi/orphic',
-    description: 'A typed Facebook userscript for downloading the highest-quality media available with source metadata.',
+    description: 'Downloading images with metadata on Facebook.',
+    links: [{ label: 'GitHub', url: 'https://github.com/martesi/orphic', icon: 'github' }],
   },
 ]
 
-export const recommendations: Project[] = []
+export const recommendations: Project[] = [
+  {
+    name: 'llm-agents.nix',
+    description: 'Nix packages for AI coding agents and development tools.',
+    links: [{ label: 'GitHub', url: 'https://github.com/numtide/llm-agents.nix', icon: 'github' }],
+  },
+]
